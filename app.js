@@ -62,7 +62,6 @@ app.use("/team", barberRouter);
 app.use("/booking", bookingRouter);
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
-// app.use("/my-appointment", myappointmentRouter);
 app.use("/api", myappointmentRouter);
 
 app.use("/admin", adminRouter);
