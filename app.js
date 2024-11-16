@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
     console.log(req.user);
     res.render('index', { user: req.user });
 });
-
+//test
 app.use("/about", aboutRouter);
 app.use("/contact", contactRouter);
 app.use("/detail", detailRouter);
