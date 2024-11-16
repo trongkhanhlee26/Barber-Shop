@@ -63,7 +63,7 @@ app.use("/booking", bookingRouter);
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
 app.use("/api", myappointmentRouter);
-
+//test git
 app.use("/admin", adminRouter);
 app.use("/admin", customerRouter);
 app.use("/admin", servicemanageRouter);
