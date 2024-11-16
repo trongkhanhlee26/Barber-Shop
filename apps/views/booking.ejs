@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OreoOrChocopie</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <%- include('partical/header'); %>
+
+        <section class="regervation_part section_padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block">
+                        <img src="static/img/booking-image.jpg" alt="Booking Image" class="img-fluid">
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="regervation_part_iner">
+                            <form id="reservationForm">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="name"
+                                                value="<%= user.fullname %>" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email"
+                                                value="<%= user.email %>" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="phone"
+                                                value="<%= user.phonenumber %>" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select class="form-control" id="serviceSelect" name="service" required>
+                                                <option value="" selected>Chọn dịch vụ*</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" id="barberGroup" style="display: none;">
+                                            <select class="form-control" id="barberSelect" name="barber" required>
+                                                <option value="" selected>Chọn nhân viên*</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control" id="dateSelect" name="date" required>
+                                                <option value="" selected>Chọn ngày*</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <select class="form-control" name="time" required>
+                                                <option value="" selected>Chọn giờ *</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" name="note" rows="4"
+                                            placeholder="Ghi chú*"></textarea>
+                                    </div>
+                                </div>
+                                <div class="regerv_btn">
+                                    <button type="submit" class="btn_1">Đặt lịch ngay</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include('partical/footer'); %>
+
+            <script src="static/js/jquery-1.12.1.min.js"></script>
+            <script src="static/js/popper.min.js"></script>
+            <script src="static/js/bootstrap.min.js"></script>
+            <script src="static/js/custom.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    const serviceSelect = $('#serviceSelect');
+                    const barberSelect = $('#barberSelect');
+                    const barberGroup = $('#barberGroup');
+                    const dateSelect = $('#dateSelect');
+                    const timeSelect = $('select[name="time"]');
+
+                    barberGroup.hide();
+
+                    const today = new Date();
+                    const tomorrow = new Date();
+                    tomorrow.setDate(today.getDate() + 1);
+
+                    dateSelect.append(`<option value="${today.toISOString().split('T')[0]}">Hôm nay (${today.toLocaleDateString()})</option>`);
+                    dateSelect.append(`<option value="${tomorrow.toISOString().split('T')[0]}">Ngày mai (${tomorrow.toLocaleDateString()})</option>`);
+
+                    $.ajax({
+                        url: '/booking/services',
+                        type: 'GET',
+                        success: function (services) {
+                            services.forEach(service => {
+                                serviceSelect.append(`<option value="${service._id}">${service.name}</option>`);
+                            });
+                        },
+                        error: function (error) {
+                            console.error('Lỗi khi lấy danh sách services:', error);
+                        }
+                    });
+
+                    serviceSelect.on('change', function () {
+                        const selectedServiceId = $(this).val();
+                        barberSelect.empty().append('<option value="" selected>Select barber*</option>');
+
+                        if (selectedServiceId) {
+                            barberGroup.show();
+
+                            $.ajax({
+                                url: `/booking/barbers-by-service/${selectedServiceId}`,
+                                type: 'GET',
+                                success: function (barbers) {
+                                    barbers.forEach(barber => {
+                                        barberSelect.append(`<option value="${barber._id}">${barber.userId.fullname}</option>`);
+                                    });
+                                },
+                                error: function (error) {
+                                    console.error('Lỗi khi lấy danh sách barber từ API:', error);
+                                }
+                            });
+                        } else {
+                            barberGroup.hide();
+                        }
+                    });
+
+                    dateSelect.on('change', loadAvailableTimes);
+                    barberSelect.on('change', loadAvailableTimes);
+
+                    function loadAvailableTimes() {
+                        const selectedDate = dateSelect.val();
+                        const selectedBarber = barberSelect.val();
+                        timeSelect.empty();
+
+                        if (selectedDate && selectedBarber) {
+                            $.ajax({
+                                url: `/booking/available-times/${selectedBarber}/${selectedDate}`,
+                                type: 'GET',
+                                success: function (schedule) {
+                                    timeSelect.empty().append('<option value="" selected>Time *</option>');
+
+                                    // Hiển thị giờ làm việc buổi sáng
+                                    if (schedule.morningShift.length > 0) {
+                                        timeSelect.append('<optgroup label="Morning Shift"></optgroup>');
+                                        schedule.morningShift.forEach(time => {
+                                            timeSelect.append(`<option value="${time}">${time}</option>`);
+                                        });
+                                    }
+
+                                    // Hiển thị giờ làm việc buổi chiều
+                                    if (schedule.afternoonShift.length > 0) {
+                                        timeSelect.append('<optgroup label="Afternoon Shift"></optgroup>');
+                                        schedule.afternoonShift.forEach(time => {
+                                            timeSelect.append(`<option value="${time}">${time}</option>`);
+                                        });
+                                    }
+                                },
+                                error: function (error) {
+                                    console.error('Error fetching available times:', error);
+                                }
+                            });
+                        }
+                    }
+
+                    function addTimeSlots(startTime, endTime) {
+                        let currentTime = new Date(startTime);
+                        endTime = new Date(endTime);
+
+                        while (currentTime < endTime) {
+                            const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            timeSelect.append(`<option value="${timeString}">${timeString}</option>`);
+                            currentTime.setMinutes(currentTime.getMinutes() + 30);
+                        }
+                    }
+
+                    // Gửi dữ liệu đặt lịch về server (tách date - time)
+                    // $('#reservationForm').on('submit', function (event) {
+                    //     event.preventDefault();
+
+                    //     const userId = '<%= user._id %>';
+                    //     const barberId = $('#barberSelect').val();
+                    //     const serviceId = $('#serviceSelect').val();
+                    //     const date = $('#dateSelect').val();
+                    //     const time = $('select[name="time"]').val();
+                    //     const note = $('textarea[name="note"]').val() || "";
+
+                    //     if (!barberId || !serviceId || !date || !time) {
+                    //         alert('Vui lòng điền đầy đủ thông tin.');
+                    //         return;
+                    //     }
+
+                    //     const datetime = new Date(`${date}T${time}`); // Tạo datetime từ date và time
+
+                    //     $.ajax({
+                    //         url: '/booking/create',
+                    //         type: 'POST',
+                    //         contentType: 'application/json',
+                    //         data: JSON.stringify({
+                    //             user: userId,
+                    //             barber: barberId,
+                    //             service: serviceId,
+                    //             datetime: datetime.toISOString(), // Gửi giá trị datetime hợp lệ
+                    //             note: note
+                    //         }),
+                    //         success: function (response) {
+                    //             alert('Đặt lịch thành công!');
+                    //             window.location.reload();
+                    //         },
+                    //         error: function (error) {
+                    //             console.error('Lỗi khi đặt lịch:', error);
+                    //             alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                    //         }
+                    //     });
+                    // });
+
+                    // Gửi dữ liệu đặt lịch về server (gọp datetime)
+                    $('#reservationForm').on('submit', function (event) {
+                        event.preventDefault();
+
+                        const userId = '<%= user._id %>';
+                        const barberId = $('#barberSelect').val();
+                        const serviceId = $('#serviceSelect').val();
+                        const date = $('#dateSelect').val();
+                        const time = $('select[name="time"]').val();
+                        const note = $('textarea[name="note"]').val() || "";
+
+                        // Kiểm tra giá trị nhập vào
+                        if (!userId || !barberId || !serviceId || !date || !time) {
+                            alert('Vui lòng điền đầy đủ thông tin.');
+                            return;
+                        }
+
+                        // Gộp date và time thành datetime
+                        const datetime = new Date(`${date}T${time}`); // Tạo datetime từ date và time
+
+                        // Kiểm tra xem datetime có hợp lệ không
+                        if (isNaN(datetime.getTime())) {
+                            alert('Ngày và giờ không hợp lệ.');
+                            return;
+                        }
+
+                        $.ajax({
+                            url: '/booking/create',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                user: userId,
+                                barber: barberId,
+                                service: serviceId,
+                                datetime: datetime.toISOString(), // Gửi datetime hợp lệ
+                                note: note
+                            }),
+                            success: function (response) {
+                                alert('Đặt lịch thành công!');
+                                window.location.reload();
+                            },
+                            error: function (error) {
+                                // console.error('Lỗi khi đặt lịch:', error);
+                                alert('Khoảng thời gian đã được đặt. Vui lòng chọn thời gian khác');
+                            }
+                        });
+                    });
+
+
+
+                });
+            </script>
+</body>
+
+</html>

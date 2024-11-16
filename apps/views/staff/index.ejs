@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Trang Nhân Viên</title>
+  <link rel="icon" href="static/img/favicon.png">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/static/admin/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/static/admin/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/admin/css/style.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #9b59b6;
+      color: white;
+    }
+
+    .checkbox-cell {
+      text-align: center;
+    }
+
+    .checkbox-cell input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .schedule-table thead th {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .form-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .d-flex {
+      gap: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Include Header -->
+  <%- include('partials/header'); %>
+
+  <!-- Include Sidebar -->
+  <%- include('partials/sidebar'); %>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Lịch Làm của tôi</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/staff">Trang chủ</a></li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Lịch làm việc theo tuần</h5>
+
+          <!-- Nút chuyển tuần -->
+          <div class="d-flex justify-content-between align-items-center">
+            <button class="btn btn-secondary" onclick="previousWeek()">Tuần trước</button>
+            <div id="weekDisplay" class="text-center"></div>
+            <button class="btn btn-secondary" onclick="nextWeek()">Tuần sau</button>
+          </div>
+
+          <!-- Bảng lịch làm việc sẽ hiển thị trực tiếp -->
+          <div id="scheduleContainer">
+            <table class="table table-striped schedule-table">
+                <thead>
+                    <tr>
+                        <th>Ca làm</th>
+                        <th>Thứ 2<br><span id="date-monday"></span></th>
+                        <th>Thứ 3<br><span id="date-tuesday"></span></th>
+                        <th>Thứ 4<br><span id="date-wednesday"></span></th>
+                        <th>Thứ 5<br><span id="date-thursday"></span></th>
+                        <th>Thứ 6<br><span id="date-friday"></span></th>
+                        <th>Thứ 7<br><span id="date-saturday"></span></th>
+                        <th>Chủ Nhật<br><span id="date-sunday"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sáng (9h-14h)</td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-1" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-2" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-3" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-4" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-5" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-6" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-morning-0" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>Chiều (14h-19h)</td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-1" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-2" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-3" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-4" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-5" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-6" disabled></td>
+                        <td class="checkbox-cell"><input type="checkbox" id="checkbox-afternoon-0" disabled></td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End Main -->
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; <strong><span>OreoOrChocopie</span></strong>
+    </div>
+    <div class="credits"></div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    let currentWeekStartDate = getMonday(new Date());
+
+    $(document).ready(function () {
+        updateWeekDisplay();
+        loadScheduleForEmployee();
+    });
+
+    function getMonday(d) {
+        d = new Date(d);
+        const day = d.getDay(),
+            diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        return new Date(d.setDate(diff));
+    }
+
+    function updateWeekDisplay() {
+        const weekDates = [];
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(currentWeekStartDate);
+            date.setDate(currentWeekStartDate.getDate() + i);
+            weekDates.push(date);
+        }
+
+        $('#date-monday').text(formatDate(weekDates[0]));
+        $('#date-tuesday').text(formatDate(weekDates[1]));
+        $('#date-wednesday').text(formatDate(weekDates[2]));
+        $('#date-thursday').text(formatDate(weekDates[3]));
+        $('#date-friday').text(formatDate(weekDates[4]));
+        $('#date-saturday').text(formatDate(weekDates[5]));
+        $('#date-sunday').text(formatDate(weekDates[6]));
+    }
+
+    function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        return `${day}/${month}`;
+    }
+
+    function previousWeek() {
+        currentWeekStartDate.setDate(currentWeekStartDate.getDate() - 7);
+        updateWeekDisplay();
+        loadScheduleForEmployee();
+    }
+
+    function nextWeek() {
+        currentWeekStartDate.setDate(currentWeekStartDate.getDate() + 7);
+        updateWeekDisplay();
+        loadScheduleForEmployee();
+    }
+
+    function loadScheduleForEmployee() {
+        const startOfWeek = new Date(currentWeekStartDate);
+        const endOfWeek = new Date(currentWeekStartDate);
+        endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+        $.ajax({
+            url: `/staff/work-schedule?start=${startOfWeek.toISOString()}&end=${endOfWeek.toISOString()}`,
+            method: 'GET',
+            success: function (data) {
+                resetSchedule();
+                data.forEach(function (schedule) {
+                    let workDate = new Date(schedule.workDate);
+                    workDate.setDate(workDate.getDate() + 1);
+                    const dayIndex = (workDate.getDay() === 0) ? 6 : workDate.getDay() - 1;
+
+                    // Kiểm tra dữ liệu ca sáng và ca chiều và tích checkbox tương ứng
+                    if (schedule.shifts.morningShift) {
+                        $(`#checkbox-morning-${dayIndex}`).prop('checked', true);
+                    }
+                    if (schedule.shifts.afternoonShift) {
+                        $(`#checkbox-afternoon-${dayIndex}`).prop('checked', true);
+                    }
+                });
+            },
+            error: function (error) {
+                console.error('Lỗi khi tải lịch làm việc:', error);
+            }
+        });
+    }
+
+    function resetSchedule() {
+        $('.checkbox-cell input[type="checkbox"]').prop('checked', false);
+    }
+</script>
+
+</body>
+
+</html>

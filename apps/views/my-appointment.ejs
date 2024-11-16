@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OreoOrChocopie</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .appointments-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .no-appointments {
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .table-striped tbody tr:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('partical/header'); %>
+    <div class="container">
+        <h1 class="my-4 text-center">Lịch Đặt Của Tôi</h1>
+        <div class="appointments-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Thợ tóc</th>
+                        <th>Dịch vụ</th>
+                        <th>Ngày</th>
+                        <th>Thời gian</th>
+                        <th>Ghi chú</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="appointments-body">
+                    <tr>
+                        <td colspan="7" class="no-appointments">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    
+    <script>
+        // JavaScript trong template
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/api/my-appointments')
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            const appointmentsBody = document.getElementById('appointments-body');
+            appointmentsBody.innerHTML = ''; // Xóa thông điệp loading
+
+            if (data.message) {
+                // Kiểm tra nếu có thông báo từ server
+                appointmentsBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="no-appointments">${data.message}</td>
+                    </tr>
+                `;
+            } else {
+                data.forEach(booking => {
+                    appointmentsBody.innerHTML += `
+                        <tr>
+                            <td>${booking.barberFullname}</td>
+                            <td>${booking.service.name}</td>
+                            <td>${new Date(booking.date).toLocaleDateString()}</td>
+                            <td>${booking.time}</td>
+                            <td>${booking.note || 'No note'}</td>
+                            <td>${booking.status}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="cancelAppointment('${booking._id}')">Hủy</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching appointments:', error);
+            document.getElementById('appointments-body').innerHTML = '<tr><td colspan="7" class="no-appointments">Error fetching appointments.</td></tr>';
+        });
+});
+
+function cancelAppointment(bookingId) {
+    if (confirm('Bạn có chắc chắn muốn hủy cuộc hẹn này không?')) {
+        fetch(`/api/my-appointments/cancel-appointment/${bookingId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (response.ok) {
+                alert(data.message || 'Hủy cuộc hẹn thành công!');
+                location.reload(); // Tải lại trang để cập nhật danh sách
+            } else {
+                alert(data.message || 'Có lỗi khi hủy cuộc hẹn.');
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error canceling appointment:', error);
+            location.reload();
+        });
+    }
+}
+
+
+    </script>
+
+     <!--::footer part start::-->
+     <%- include('partical/footer'); %>
+     <!--::footer part end::-->
+</body>
+
+</html>

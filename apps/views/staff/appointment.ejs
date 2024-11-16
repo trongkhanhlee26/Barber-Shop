@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách Lịch Hẹn</title>
+  <link rel="icon" href="static/img/favicon.png">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/static/admin/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/static/admin/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/admin/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Include Header -->
+  <%- include('partials/header'); %>
+
+  <!-- Include Sidebar -->
+  <%- include('partials/sidebar'); %>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Lịch Hẹn của Tôi</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/staff">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Lịch Hẹn</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Danh sách lịch hẹn của tôi</h5>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Khách hàng</th>
+                <th>Dịch vụ</th>
+                <th>Ngày</th> <!-- Cột ngày riêng -->
+                <th>Giờ</th> <!-- Cột giờ riêng -->
+                <th>Ghi chú</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="appointmentTableBody">
+              <!-- Nội dung lịch hẹn sẽ được load từ AJAX -->
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </section>
+  </main><!-- End Main -->
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; <strong><span>OreoOrChocopie</span></strong>
+    </div>
+    <div class="credits"></div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Load danh sách lịch hẹn từ API
+      loadAppointments();
+
+      function loadAppointments() {
+        $.ajax({
+          url: "/staff/appointments",
+          method: "GET",
+          success: function (data) {
+            $("#appointmentTableBody").empty();
+            data.forEach(function (appointment) {
+              const row =
+                `<tr>
+                  <td>${appointment.user.fullname}</td>
+                  <td>${appointment.service.name}</td>
+                  <td>${appointment.date}</td> <!-- Hiển thị ngày -->
+                  <td>${appointment.time}</td> <!-- Hiển thị giờ -->
+                  <td>${appointment.note || ''}</td>
+                  <td><span class="status">${appointment.status}</span></td>
+                  <td>
+                    ${appointment.status === 'Chờ xác nhận' ? 
+                      `<button class="btn btn-primary confirm-btn" data-id="${appointment._id}">Xác nhận</button>` : ''}
+                    ${appointment.status === 'Chờ xác nhận' ? 
+                      `<button class="btn btn-danger cancel-btn" data-id="${appointment._id}">Hủy</button>` : ''}
+                  </td>
+                </tr>`;
+              $("#appointmentTableBody").append(row);
+            });
+
+            // Xử lý sự kiện cho nút xác nhận
+            $(document).on('click', '.confirm-btn', function () {
+              const appointmentId = $(this).data('id');
+
+              $.ajax({
+                url: `/staff/appointments/confirm/${appointmentId}`,
+                method: 'PUT',
+                success: function (response) {
+                  // Cập nhật lại danh sách lịch hẹn sau khi xác nhận thành công
+                  loadAppointments();
+                },
+                error: function (error) {
+                  console.error("Lỗi khi xác nhận lịch hẹn:", error);
+                }
+              });
+            });
+          },
+          error: function (error) {
+            console.error("Lỗi khi tải lịch hẹn:", error);
+          }
+        });
+      }
+
+      // Xử lý sự kiện cho nút hủy
+      $(document).on('click', '.cancel-btn', function () {
+        const appointmentId = $(this).data('id');
+
+        // Hiển thị hộp thoại xác nhận trước khi hủy
+        if (confirm("Bạn có chắc chắn muốn hủy lịch hẹn này?")) {
+          $.ajax({
+            url: `/staff/appointments/cancel/${appointmentId}`,
+            method: 'PUT',
+            success: function (response) {
+              // Cập nhật lại danh sách lịch hẹn sau khi hủy thành công
+              loadAppointments();
+            },
+            error: function (error) {
+              console.error("Lỗi khi hủy lịch hẹn:", error);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
