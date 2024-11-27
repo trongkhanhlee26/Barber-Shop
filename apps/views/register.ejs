@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>OreoOrChocopie - Đăng Ký</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link rel="icon" href="static/img/favicon.png">
+  <link href="/static/admin/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/static/admin/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/static/admin/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/admin/css/style.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      background-image: url('static/img/about_us_1.png');
+    }
+
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+      background-color: #ff6565;
+      border-color: #ff6565;
+    }
+
+    .btn-primary:hover {
+      background-color: #e64a4a;
+      border-color: #e64a4a;
+    }
+
+    .login-link {
+      text-align: center;
+    }
+
+    .alert {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="/" class="logo d-flex align-items-center w-auto">
+                  <span class="d-none d-lg-block ml-2">OreoOrChocopie</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Tạo Tài Khoản Mới</h5>
+                    <p class="text-center small">Hãy nhập thông tin để tạo tài khoản mới</p>
+                  </div>
+
+                  <!-- Hiển thị thông báo lỗi nếu có -->
+                  <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                    <div class="alert alert-danger" role="alert">
+                      <%= errorMessage %>
+                    </div>
+                  <% } %>
+
+                  <!-- Form đăng ký -->
+                  <form action="/register" method="POST" class="row g-3 needs-validation" novalidate>
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Họ và Tên</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
+                        <input type="text" name="fullname" class="form-control" id="yourName"
+                          placeholder="Nhập họ và tên của bạn" required>
+                        <div class="invalid-feedback">Vui lòng nhập tên đầy đủ của bạn!</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label">Email</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-envelope"></i></span>
+                        <input type="email" name="email" class="form-control" id="yourEmail"
+                          placeholder="Nhập email của bạn" required>
+                        <div class="invalid-feedback">Vui lòng nhập email hợp lệ!</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPhone" class="form-label">Số Điện Thoại</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-phone"></i></span>
+                        <input type="text" name="phonenumber" class="form-control" id="yourPhone"
+                          placeholder="Nhập số điện thoại của bạn" required>
+                        <div class="invalid-feedback">Vui lòng nhập số điện thoại của bạn!</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Mật khẩu</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-lock"></i></span>
+                        <input type="password" name="password" class="form-control" id="yourPassword"
+                          placeholder="Nhập mật khẩu của bạn" required>
+                        <div class="invalid-feedback">Vui lòng nhập mật khẩu!</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Tạo Tài Khoản</button>
+                    </div>
+                  </form>
+                  <!-- Kết thúc form đăng ký -->
+                </div>
+              </div>
+
+              <div class="login-link">
+                <p>Đã có tài khoản? <a href="/login" class="text-primary">Đăng nhập</a></p>
+              </div>
+
+              <div class="credits">
+                <a href="https://bootstrapmade.com/"></a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/admin/js/main.js"></script>
+
+</body>
+
+</html>

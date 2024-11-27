@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Cập nhật thông tin dịch vụ</title>
+  <link rel="icon" href="/static/img/favicon.png">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/admin/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <%- include('partials/header'); %>
+    <%- include('partials/sidebar'); %>
+
+      <main id="main" class="main">
+        <div class="pagetitle">
+          <h1>Cập nhật thông tin dịch vụ</h1>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
+            </ol>
+          </nav>
+        </div>
+
+        <section class="section">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">CẬP NHẬT THÔNG TIN DỊCH VỤ</h5>
+              <form id="updateForm" class="row g-3">
+                <div class="col-md-12">
+                  <label for="serviceName" class="form-label">Tên dịch vụ</label>
+                  <input type="text" class="form-control" id="serviceName" placeholder="Tên dịch vụ" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="servicePrice" class="form-label">Giá dịch vụ</label>
+                  <input type="number" class="form-control" id="servicePrice" placeholder="Giá dịch vụ" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="serviceDuration" class="form-label">Thời gian thực hiện</label>
+                  <input type="text" class="form-control" id="serviceDuration" placeholder="Thời gian thực hiện dịch vụ"
+                    required>
+                </div>
+                <div class="col-md-12">
+                  <label for="serviceDescription" class="form-label">Mô tả dịch vụ</label>
+                  <textarea class="form-control" id="serviceDescription" placeholder="Mô tả dịch vụ" rows="3"
+                    required></textarea>
+                </div>
+                <div class="col-md-12">
+                  <label for="serviceImage" class="form-label">Chọn ảnh dịch vụ</label>
+                  <input class="form-control" type="file" id="serviceImage">
+                </div>
+                <div class="text-center mt-4">
+                  <button type="button" class="btn btn-primary btn-lg me-2" id="saveButton">
+                    <i class="bi bi-check-circle"></i> Lưu thay đổi
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-lg" onclick="showCancelConfirmation()">
+                    <i class="bi bi-x-circle"></i> Hủy
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="successMessage" class="success-message">
+            <div class="message-content">
+              <p>Cập nhật thành công!</p>
+            </div>
+          </div>
+
+          <div id="cancelConfirmation" class="cancel-confirmation">
+            <div class="confirmation-content">
+              <p>Bạn có chắc muốn hủy không?</p>
+              <button class="btn btn-danger" onclick="cancelAction()">Đồng ý</button>
+              <button class="btn btn-secondary" onclick="closeCancelConfirmation()">Không</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          const serviceId = window.location.pathname.split('/').pop();
+
+          $('#saveButton').on('click', function () {
+            const formData = new FormData();
+            formData.append('name', $('#serviceName').val());
+            formData.append('price', $('#servicePrice').val());
+            formData.append('duration', $('#serviceDuration').val());
+            formData.append('description', $('#serviceDescription').val());
+
+            // Thay đổi này nếu bạn muốn gửi URL hình ảnh từ một trường khác
+            const imageUrl = $('#serviceImage').val(); // Giả sử bạn đã có URL hình ảnh
+            if (imageUrl) {
+              formData.append('imageUrl', imageUrl);
+            }
+
+            $.ajax({
+              url: `/api/services/update/${serviceId}`,
+              type: 'PUT',
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function (response) {
+                $('#successMessage').show();
+                setTimeout(() => {
+                  $('#successMessage').hide();
+                  window.location.href = '/admin/services-manage';
+                }, 2000);
+              },
+              error: function (error) {
+                console.error("Chi tiết lỗi:", error);
+                alert(error.responseJSON && error.responseJSON.message
+                  ? error.responseJSON.message
+                  : 'Lỗi khi cập nhật dịch vụ! Vui lòng thử lại.');
+              }
+            });
+          });
+        });
+
+
+
+        function showCancelConfirmation() {
+          $('#cancelConfirmation').show();
+        }
+
+        function closeCancelConfirmation() {
+          $('#cancelConfirmation').hide();
+        }
+
+        function cancelAction() {
+          window.location.href = '/admin/services-manage';
+        }
+      </script>
+
+      <style>
+        .success-message,
+        .cancel-confirmation {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        .message-content,
+        .confirmation-content {
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          text-align: center;
+          font-size: 1.2rem;
+        }
+
+        .confirmation-content button {
+          margin: 10px;
+        }
+      </style>
+
+      <script src="/static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

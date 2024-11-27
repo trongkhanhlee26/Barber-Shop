@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OreoOrChocopie</title>
+    <link rel="icon" href="static/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="static/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="static/css/themify-icons.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="static/css/flaticon.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="static/css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/gijgo.min.css">
+    <link rel="stylesheet" href="static/css/nice-select.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <!--::header part start::-->
+    <%- include('partical/header'); %>
+        <!-- Header part end-->
+
+        <!-- breadcrumb start-->
+        <section class="breadcrumb breadcrumb_bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb_iner text-center">
+                            <div class="breadcrumb_iner_item">
+                                <h2>Giá Thành</h2>
+                                <p>home <span class="ti-angle-double-right"></span>Giá Thành</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb start-->
+
+        <!-- priceing part start-->
+        <section class="priceing_part">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 col-lg-6 col-sm-10">
+                        <div class="section_tittle">
+                            <img src="static/img/section_tittle_icon.png" alt="icon">
+                            <h2>Giá Thành</h2>
+                            <p>Giá cả hợp lý khách hàng khoái chí!!!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <% if (services && services.length > 0) { %>
+                        <% services.forEach(function(service) { %>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="single_pricing_item">
+                                    <!-- Hiển thị hình ảnh từ trường imageUrl với bo tròn và kích thước 80x80 -->
+                                    <img src="<%= service.imageUrl %>" alt="<%= service.name %>" 
+                                         style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+                                    <div class="single_pricing_text">
+                                        <h5><%= service.name %></h5>
+                                        <h6><%= service.price %>đ</h6>
+                                        <p><%= service.description %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No services available at the moment.</p>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+        <!-- priceing part end-->
+
+        <!-- footer part start-->
+        <%- include('partical/footer'); %>
+            <!-- footer part end-->
+
+            <!-- jquery plugins here-->
+
+            <script src="public/js/jquery-1.12.1.min.js"></script>
+            <!-- popper js -->
+            <script src="public/js/popper.min.js"></script>
+            <!-- bootstrap js -->
+            <script src="public/js/bootstrap.min.js"></script>
+            <!-- easing js -->
+            <script src="public/js/jquery.magnific-popup.js"></script>
+            <!-- swiper js -->
+            <script src="public/js/swiper.min.js"></script>
+            <!-- swiper js -->
+            <script src="public/js/masonry.pkgd.js"></script>
+            <!-- particles js -->
+            <script src="public/js/owl.carousel.min.js"></script>
+            <!-- swiper js -->
+            <script src="public/js/slick.min.js"></script>
+            <script src="public/js/gijgo.min.js"></script>
+            <script src="public/js/jquery.nice-select.min.js"></script>
+            <!-- contact js -->
+            <script src="public/js/jquery.ajaxchimp.min.js"></script>
+            <script src="public/js/jquery.form.js"></script>
+            <script src="public/js/jquery.validate.min.js"></script>
+            <script src="public/js/mail-script.js"></script>
+            <script src="public/js/contact.js"></script>
+            <!-- custom js -->
+            <script src="public/js/custom.js"></script>
+</body>
+
+</html>
