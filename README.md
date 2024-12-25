@@ -14,7 +14,7 @@
 - [Cảm Ơn](#cảm-ơn)
 
 > ## Giới thiệu
-**Đây là một dự án về đề đặt lịch cắt tóc trên trang wbe của chũng tôi mang lại sự tiện nghi, nhanh chóng cho những khách hàng không muôsn chờ đợi việc đặt lịch ở chỗ cắt tóc **<p>
+**Đây là một dự án về đề đặt lịch cắt tóc trên trang web của chúng tôi mang lại sự tiện nghi, nhanh chóng cho những khách hàng không muốn chờ đợi việc đặt lịch ở chỗ cắt tóc **<p>
 
 **Với giao diện đơn giản nhưng trực quan, người dùng có thể dễ dàng thực hiện các việc đặt lịch, chọn dịch vụ mà không cần phải ra tiệm cho phức tạp. Mỗi dịch vụ cắt tóc sẽ được xử lý thông qua các dòng mã code hợp lý và hiệu quả, giúp người dùng tiết kiệm thời gian và tối ưu hóa cho những công việc khác. Đây là một công cụ cực kỳ hữu ích cho những ai cần đặt lịch nhanh chóng và ít tốn thời gian mà không cần rườm rà đi đâu đó**
 
