@@ -53,6 +53,9 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
     res.render('register');
 });
+router.get('/forgotpassword', (req, res) => {
+    res.render('forgotpassword');
+});
 
 router.get('/profile', (req, res) => {
     if (req.session.user) {
