@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OreoOrChocopie</title>
+    <link rel="icon" href="static/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="static/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="static/css/themify-icons.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="static/css/flaticon.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="static/css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/gijgo.min.css">
+    <link rel="stylesheet" href="static/css/nice-select.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <%- include('partical/header'); %>
+    <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+        <div class="alert alert-success" role="alert">
+            <%= successMessage %>
+        </div>
+    <% } %>
+    
+        <!-- banner part start-->
+        <section class="banner_part">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="banner_text">
+                            <div class="banner_text_iner">
+                                <h5>Dễ chịu như đang ở nhà</h5>
+                                <h1>Đảm Bảo Đẹp</h1>
+                                <p>Tại Oreo or Chocopie, chúng tôi không chỉ cắt tóc, chúng tôi tạo nên sự tự tin.
+                                    Với đội ngũ nhà tạo mẫu tài năng và giàu kinh nghiệm, tiệm của chúng tôi cam kết
+                                    mang đến cho bạn không chỉ kiểu tóc hoàn hảo mà còn là trải nghiệm thư giãn và tinh
+                                    tế.
+                                    Chúng tôi luôn cập nhật những xu hướng tóc mới nhất, kết hợp kỹ thuật hiện đại để
+                                    đảm bảo mái tóc của bạn luôn rạng rỡ và khỏe mạnh.
+
+                                    Dù bạn muốn thay đổi kiểu dáng hay chăm sóc tóc thường xuyên, chúng tôi luôn sẵn
+                                    sàng lắng nghe và tư vấn tận tình, giúp bạn tự tin thể hiện phong cách riêng.</p>
+                                <div class="banner_btn">
+                                    <a href="/booking" class="btn_1">Đặt Ngay</a>
+                                    <a href="/contact" class="btn_2">Liên Lạc</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- banner part start-->
+
+        <!-- about part start-->
+        <section class="about_part">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-4 col-lg-6">
+                        <div class="about_img ">
+                            <img src="static/img/about_us_1.png" class="about_img_1" alt="">
+                            <img src="static/img/about_us_2.png" class="about_img_2" alt="">
+                            <img src="static/img/about_us_3.png" class="about_img_3" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-7 offset-md-1 col-lg-3 offset-lg-1">
+                        <div class="about_text">
+                            <h5>Về Chúng Tôi</h5>
+                            <h2>Phong cách</h2>
+                            <p>Với hơn 25 năm kinh nghiệm trong ngành tạo mẫu tóc, Với các bậc thầy trong việc biến ý
+                                tưởng thành hiện thực.
+                                Từng tốt nghiệp từ những học viện danh tiếng và thường xuyên tham gia các khóa học nâng
+                                cao, chúng tôi luôn cập nhật những xu hướng mới nhất,
+                                đem lại cho khách hàng những kiểu tóc thời thượng và phù hợp nhất.
+                            </p>
+                            <p>Mỗi thành viên trong đội ngũ của chúng tôi đều mang đến giá trị riêng, nhưng tất cả đều
+                                chung một mục tiêu:
+                                tạo ra mái tóc đẹp và phù hợp nhất cho khách hàng.
+                                Hãy đến và trải nghiệm sự chuyên nghiệp và tận tâm của chúng tôi tại Oreo or Chocopie!
+                            </p>
+                            <a href="/about" class="btn_3">Tìm hiểu thêm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- about part end-->
+
+        <!-- Service part start-->
+        <section class="service_part section_padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 col-lg-6 col-sm-10">
+                        <div class="section_tittle">
+                            <img src="static/img/section_tittle_icon.png" alt="icon">
+                            <h2>Chi Tiết Dịch Vụ</h2>
+                            <p>Mang lại dịch vụ siêu cấp tuyệt vời cho khách hàng nơi đây.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <% if(services.length> 0) { %>
+                        <% services.forEach(function(service) { %>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="single_service_part" style="height: 600px; width: 350px;">
+                                    <img src="<%= service.imageUrl %>" alt="<%= service.name %>"
+                                        style="padding: 0px; margin-bottom: 0; width: 476px; height: 300px; object-fit: cover;">
+                                    <div class="single_service_text" style="padding: 15px;">
+                                        <h4 style="padding: 0px; margin-bottom: 10px;">
+                                            <%= service.name %>
+                                        </h4>
+                                        <p style="padding: 0px; margin-bottom: 10px;">
+                                            <%= service.description %>
+                                        </p>
+                                        <p style="padding: 0px; margin-bottom: 10px;">
+                                            <strong>Thời gian:</strong>
+                                            <%= service.duration %> phút
+                                        </p>
+                                        <a href="/detailservice" class="btn_3" style="margin-top: auto;">Tìm hiểu
+                                            thêm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="col-12 text-center">
+                                        <h4>Hiện tại chưa có dịch vụ nào.</h4>
+                                    </div>
+                                    <% } %>
+                </div>
+            </div>
+
+        </section>
+        <!-- Service part end-->
+
+        <!-- our_offer part start-->
+        <section class="our_offer">
+            <div class="container-fluid">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <div class="single_offer_part">
+                            <div class="single_offer">
+                                <img src="static/img/offer_img_1.png" alt="offer_img_1">
+                                <div class="hover_text">
+                                    <img src="static/img/icon/cutter.svg" alt="#">
+                                    <h2>Thiết bị tốt nhất</h2>
+                                    <p>Lựa chọn những thiệt bị hàng đầu</p>
+                                    <a href="#" class="offer_btn"><span class="flaticon-slim-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_offer_part">
+                            <div class="single_offer">
+                                <img src="static/img/offer_img_2.png" alt="offer_img_1">
+                                <div class="hover_text">
+                                    <img src="static/img/icon/cutter.svg" alt="#">
+                                    <h2>Giá thành hợp lý</h2>
+                                    <p>Khách hàng vui vẻ là hạnh phúc chúng tôi. </p>
+                                    <a href="#" class="offer_btn"><span class="flaticon-slim-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_offer_part">
+                            <div class="single_offer">
+                                <img src="static/img/offer_img_3.png" alt="offer_img_1">
+                                <div class="hover_text">
+                                    <img src="static/img/icon/cutter.svg" alt="#">
+                                    <h2>Không gian mát mẻ</h2>
+                                    <p>Thoải mái hơn ở với nyc</p>
+                                    <a href="#" class="offer_btn"><span class="flaticon-slim-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_offer_part">
+                            <div class="single_offer">
+                                <img src="static/img/offer_img_4.png" alt="offer_img_1">
+                                <div class="hover_text">
+                                    <img src="static/img/icon/cutter.svg" alt="#">
+                                    <h2>Nhân viên thân thiện</h2>
+                                    <p>Nói chuyện một lần quên luôn nyc</p>
+                                    <a href="#" class="offer_btn"><span class="flaticon-slim-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- our_offer part end-->
+
+
+        <!-- pricing part start-->
+        <section class="priceing_part">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 col-lg-6 col-sm-10">
+                        <div class="section_tittle">
+                            <img src="static/img/section_tittle_icon.png" alt="icon">
+                            <h2>Giá Thành</h2>
+                            <p>Giá cả hợp lý khách hàng khoái chí!!!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <% if (services && services.length> 0) { %>
+                        <% services.forEach(function(service) { %>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="single_pricing_item">
+                                    <!-- Hiển thị hình ảnh từ trường imageUrl với bo tròn và kích thước 80x80 -->
+                                    <img src="<%= service.imageUrl %>" alt="<%= service.name %>"
+                                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+                                    <div class="single_pricing_text">
+                                        <h5>
+                                            <%= service.name %>
+                                        </h5>
+                                        <h6><%= service.price %>đ
+                                        </h6>
+                                        <p>
+                                            <%= service.description %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                                <% } else { %>
+                                    <p>No services available at the moment.</p>
+                                    <% } %>
+                </div>
+            </div>
+        </section>
+        <!-- pricing part end-->
+
+
+        <!-- ::review_part start::-->
+        <section class="review_part gray_bg section_padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="client_review_part owl-carousel">
+                            <div class="client_review_single">
+                                <img src="static/img/Quote.png" class="Quote" alt="quote">
+                                <div class="client_review_text">
+                                    <p>Also made from. Give may saying meat there from heaven it lights face had is
+                                        gathered
+                                        god dea earth light for life may itself shall whales made they're blessed whales
+                                        also made from give
+                                        may saying meat. There from heaven it lights face had amazing place</p>
+                                </div>
+                                <div class="client_img">
+                                    <img src="static/img/client/client_1.png" alt="">
+                                </div>
+                                <h4>Mosan Cameron, <span>Executive of fedex</span></h4>
+                            </div>
+                            <div class="client_review_single">
+                                <img src="static/img/Quote.png" class="Quote" alt="quote">
+                                <div class="client_review_text media-body">
+                                    <p>Also made from. Give may saying meat there from heaven it lights face had is
+                                        gathered
+                                        god dea earth light for life may itself shall whales made they're blessed whales
+                                        also made from give
+                                        may saying meat. There from heaven it lights face had amazing place</p>
+                                </div>
+                                <div class="client_img">
+                                    <img src="static/img/client/client_1.png" alt="">
+                                </div>
+                                <h4>Mosan Cameron, <span>Executive of fedex</span></h4>
+                            </div>
+                            <div class="client_review_single">
+                                <img src="static/img/Quote.png" class="Quote" alt="quote">
+                                <div class="client_review_text">
+                                    <p>Also made from. Give may saying meat there from heaven it lights face had is
+                                        gathered
+                                        god dea earth light for life may itself shall whales made they're blessed whales
+                                        also made from give
+                                        may saying meat. There from heaven it lights face had amazing place</p>
+                                </div>
+                                <div class="client_img">
+                                    <img src="static/img/client/client_1.png" alt="">
+                                </div>
+                                <h4>Mosan Cameron, <span>Executive of fedex</span></h4>
+                            </div>
+                            <div class="client_review_single">
+                                <img src="static/img/Quote.png" class="Quote" alt="quote">
+                                <div class="client_review_text">
+                                    <p>Also made from. Give may saying meat there from heaven it lights face had is
+                                        gathered
+                                        god dea earth light for life may itself shall whales made they're blessed whales
+                                        also made from give
+                                        may saying meat. There from heaven it lights face had amazing place</p>
+                                </div>
+                                <div class="client_img">
+                                    <img src="static/img/client/client_1.png" alt="">
+                                </div>
+                                <h4>Mosan Cameron, <span>Executive of fedex</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--::review_part end:: -->
+
+        <!--::chefs_part start::-->
+    <section class="artist_part single_page_artist">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-lg-6 col-sm-10">
+                    <div class="section_tittle">
+                        <img src="static/img/section_tittle_icon.png" alt="icon">
+                        <h2>Nhân Viên</h2>
+                        <p>Những nhân viên được đánh giá cao và nhận được sự hài lòng tuyệt đối của khách hàng.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <% if (barbers && barbers.length > 0) { %>
+                    <% barbers.forEach(function(barber) { %>
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="single_blog_item">
+                                <div class="single_blog_img">
+                                    <!-- Hiển thị hình ảnh của barber -->
+                                    <img src="<%= barber.imageUrl ? barber.imageUrl : 'default-image-path.jpg' %>"
+                                         alt="artist" style="height: 480px; width: 360px; object-fit: cover;">
+                                </div>
+                                <div class="single_text">
+                                    <div class="single_blog_text text-center">
+                                        <!-- Hiển thị tên, kinh nghiệm và dịch vụ của barber -->
+                                        <h3><%= barber.userId ? barber.userId.fullname : 'Không có tên' %></h3>
+                                        <p><%= barber.experience %> năm kinh nghiệm</p>
+                                        <p>Chuyên môn: <%= barber.service ? barber.service.name : 'Không có chuyên môn' %></p>
+                                        <div class="social_icon">
+                                            <a href="https://www.facebook.com/kayak.barber?locale=vi_VN" target="_blank">
+                                                <i class="ti-facebook"></i>
+                                            </a>
+                                            <a href="https://www.instagram.com/kayak.barber/" target="_blank">
+                                                <i class="ti-instagram"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="col-12 text-center">
+                        <h4>Hiện tại chưa có nhân viên nào.</h4>
+                    </div>
+                <% } %>
+            </div>            
+        </div>
+    </section>
+    <!--::chefs_part end-->
+
+
+        <!-- footer part start-->
+        <%- include('partical/footer'); %>
+            <!-- footer part end-->
+
+            <!-- jquery plugins here-->
+
+            <script src="public/js/jquery-1.12.1.min.js"></script>
+            <!-- popper js -->
+            <script src="public/js/popper.min.js"></script>
+            <!-- bootstrap js -->
+            <script src="public/js/bootstrap.min.js"></script>
+            <!-- easing js -->
+            <script src="public/js/jquery.magnific-popup.js"></script>
+            <!-- swiper js -->
+            <script src="public/js/swiper.min.js"></script>
+            <!-- swiper js -->
+            <script src="public/js/masonry.pkgd.js"></script>
+            <!-- particles js -->
+            <script src="public/js/owl.carousel.min.js"></script>
+            <!-- swiper js -->
+            <script src="public/js/slick.min.js"></script>
+            <script src="public/js/gijgo.min.js"></script>
+            <script src="public/js/jquery.nice-select.min.js"></script>
+            <!-- contact js -->
+            <script src="public/js/jquery.ajaxchimp.min.js"></script>
+            <script src="public/js/jquery.form.js"></script>
+            <script src="public/js/jquery.validate.min.js"></script>
+            <script src="public/js/mail-script.js"></script>
+            <script src="public/js/contact.js"></script>
+            <!-- custom js -->
+            <script src="public/js/custom.js"></script>
+</body>
+
+</html>

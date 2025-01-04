@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OreoOrChocopie</title>
+    <link rel="icon" href="static/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="static/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="static/css/themify-icons.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="static/css/flaticon.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="static/css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/gijgo.min.css">
+    <link rel="stylesheet" href="static/css/nice-select.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <%- include('partical/header'); %>
+    
+    <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Thành Viên</h2>
+                            <p>Trang Chủ <span class="ti-angle-double-right"></span>Thành Viên</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb end-->
+
+    <!--::chefs_part start::-->
+    <section class="artist_part single_page_artist">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-lg-6 col-sm-10">
+                    <div class="section_tittle">
+                        <img src="static/img/section_tittle_icon.png" alt="icon">
+                        <h2>Nhân Viên</h2>
+                        <p>Những nhân viên được đánh giá cao và nhận được sự hài lòng tuyệt đối của khách hàng.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <% if (barbers && barbers.length > 0) { %>
+                    <% barbers.forEach(function(barber) { %>
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="single_blog_item">
+                                <div class="single_blog_img">
+                                    <!-- Hiển thị hình ảnh của barber -->
+                                    <img src="<%= barber.imageUrl ? barber.imageUrl : 'default-image-path.jpg' %>"
+                                         alt="artist" style="height: 480px; width: 360px; object-fit: cover;">
+                                </div>
+                                <div class="single_text">
+                                    <div class="single_blog_text text-center">
+                                        <!-- Hiển thị tên, kinh nghiệm và dịch vụ của barber -->
+                                        <h3><%= barber.userId ? barber.userId.fullname : 'Không có tên' %></h3>
+                                        <p><%= barber.experience %> năm kinh nghiệm</p>
+                                        <p>Chuyên môn: <%= barber.service ? barber.service.name : 'Không có chuyên môn' %></p>
+                                        <div class="social_icon">
+                                            <a href="https://www.facebook.com/kayak.barber?locale=vi_VN" target="_blank">
+                                                <i class="ti-facebook"></i>
+                                            </a>
+                                            <a href="https://www.instagram.com/kayak.barber/" target="_blank">
+                                                <i class="ti-instagram"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="col-12 text-center">
+                        <h4>Hiện tại chưa có nhân viên nào.</h4>
+                    </div>
+                <% } %>
+            </div>            
+        </div>
+    </section>
+    <!--::chefs_part end-->
+
+    <!--::review_part start::-->
+    <section class="review_part gray_bg section_padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="client_review_part owl-carousel">
+                        <div class="client_review_single">
+                            <img src="static/img/Quote.png" class="Quote" alt="quote">
+                            <div class="client_review_text">
+                                <p>Also made from. Give may saying meat there from heaven it lights face had is gathered
+                                    god dea earth light for life may itself shall whales made they're blessed whales
+                                    also made from give
+                                    may saying meat. There from heaven it lights face had amazing place</p>
+                            </div>
+                            <div class="client_img">
+                                <img src="static/img/client/client_1.png" alt="">
+                            </div>
+                            <h4>Mosan Cameron, <span>Executive of fedex</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--::review_part end-->
+
+    <!-- footer part start-->
+    <%- include('partical/footer'); %>
+    <!-- footer part end-->
+
+    <!-- jquery plugins here-->
+    <script src="public/js/jquery-1.12.1.min.js"></script>
+    <script src="public/js/popper.min.js"></script>
+    <script src="public/js/bootstrap.min.js"></script>
+    <script src="public/js/jquery.magnific-popup.js"></script>
+    <script src="public/js/swiper.min.js"></script>
+    <script src="public/js/masonry.pkgd.js"></script>
+    <script src="public/js/owl.carousel.min.js"></script>
+    <script src="public/js/slick.min.js"></script>
+    <script src="public/js/gijgo.min.js"></script>
+    <script src="public/js/jquery.nice-select.min.js"></script>
+    <script src="public/js/jquery.ajaxchimp.min.js"></script>
+    <script src="public/js/jquery.form.js"></script>
+    <script src="public/js/jquery.validate.min.js"></script>
+    <script src="public/js/mail-script.js"></script>
+    <script src="public/js/contact.js"></script>
+    <script src="public/js/custom.js"></script>
+</body>
+
+</html>

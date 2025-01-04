@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Quản lý nhân viên</title>
+  <link rel="icon" href="static/img/favicon.png">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/static/admin/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/static/admin/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/static/admin/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/admin/css/style.css" rel="stylesheet">
+
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #9b59b6;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Include Header -->
+  <%- include('partials/header'); %>
+
+  <!-- Include Sidebar -->
+  <%- include('partials/sidebar'); %>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>QUẢN LÝ NHÂN VIÊN</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Danh Sách Nhân Viên</h5>
+          <div class="container mt-5">
+            <table class="table table-bordered datatable">
+              <thead>
+                <tr>
+                  <th>HỌ VÀ TÊN</th>
+                  <th>KINH NGHIỆM (NĂM)</th>
+                  <th>DỊCH VỤ</th>
+                  <th>ẢNH</th>
+                  <th>HÀNH ĐỘNG</th>
+                </tr>
+              </thead>
+              <tbody id="barberTableBody">
+                <!-- Dữ liệu sẽ được điền tự động từ AJAX -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End Main -->
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; <strong><span>OreoOrChocopie</span></strong>
+    </div>
+    <div class="credits"></div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Gọi API để lấy danh sách barber
+      function loadBarbers() {
+        $.ajax({
+          url: '/admin/staffs/data',
+          type: 'GET',
+          success: function (barbers) {
+            const tableBody = $('#barberTableBody');
+            tableBody.empty();
+
+            // Duyệt qua danh sách barber và thêm vào bảng
+            barbers.forEach(function (barber) {
+              const serviceName = barber.service ? barber.service.name : 'Không xác định';
+              const barberName = barber.userId ? barber.userId.fullname : 'Không có tên'; // Lấy tên từ userId
+              const imageUrl = barber.imageUrl ? `<img src="${barber.imageUrl}" alt="Ảnh nhân viên" style="width: 80px; height: auto;">` : 'Không có ảnh';
+
+              const row = `
+                <tr>
+                  <td>${barberName}</td>
+                  <td>${barber.experience} năm</td>
+                  <td>${serviceName}</td>
+                  <td>${imageUrl}</td>
+                  <td>
+                    <a href="/admin/staffs-update/${barber._id}" class="btn btn-primary btn-sm">Sửa</a>
+                    <button class="btn btn-danger btn-sm delete-button" data-id="${barber._id}">Xóa</button>
+                  </td>
+                </tr>
+              `;
+
+              tableBody.append(row);
+            });
+          },
+          error: function (error) {
+            console.error('Lỗi khi lấy danh sách barber:', error);
+            alert('Lỗi khi tải danh sách nhân viên!');
+          }
+        });
+      }
+
+      // Tải danh sách barber khi trang được tải
+      loadBarbers();
+
+      // Xử lý sự kiện xóa nhân viên
+      $(document).on('click', '.delete-button', function () {
+        const barberId = $(this).data('id');
+        if (confirm('Bạn có chắc muốn xóa nhân viên này?')) {
+          $.ajax({
+            url: `/admin/staffs/delete/${barberId}`,
+            method: 'DELETE',
+            success: function (response) {
+              alert(response.message);
+              // Tải lại danh sách barber sau khi xóa thành công
+              loadBarbers();
+            },
+            error: function (err) {
+              alert('Lỗi khi xóa nhân viên.');
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

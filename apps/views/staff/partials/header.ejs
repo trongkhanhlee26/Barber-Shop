@@ -1,0 +1,70 @@
+<header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn" style="cursor: pointer;"></i>
+    </div>
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+  
+            <!-- Hiển thị tên tài khoản nhân viên (barber) -->
+            <% if (barber) { %>
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Xin chào, <%= barber.fullname %></span>
+                    </a>
+                    <!-- Menu dropdown cho tài khoản nhân viên -->
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li>
+                            <!-- Nút Đăng xuất -->
+                            <form id="logout-form" action="/logout" method="POST" style="display: inline;">
+                                <button type="submit" class="dropdown-item d-flex align-items-center">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>ĐĂNG XUẤT</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            <% } %>
+  
+        </ul>
+    </nav><!-- End Icons Navigation -->
+</header><!-- End Header -->
+
+<!-- Thêm JavaScript xử lý sidebar toggle -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebarToggle = document.querySelector('.toggle-sidebar-btn');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('#main');
+
+        sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('active'); // Thêm hoặc xóa class 'active'
+            mainContent.classList.toggle('expanded'); // Điều chỉnh nội dung chính khi sidebar ẩn/hiện
+        });
+    });
+</script>
+
+<!-- CSS để hỗ trợ hiệu ứng chuyển đổi sidebar và nội dung chính -->
+<style>
+    /* CSS cho sidebar */
+    .sidebar {
+        transition: transform 0.3s ease;
+        transform: translateX(0);
+        width: 250px; /* Đặt chiều rộng sidebar */
+    }
+
+    .sidebar.active {
+        transform: translateX(-250px); /* Ẩn sidebar bằng cách di chuyển ra khỏi màn hình */
+    }
+
+    /* CSS cho nội dung chính */
+    #main {
+        transition: margin-left 0.3s ease;
+        margin-left: 250px; /* Mặc định đẩy nội dung chính sang phải khi sidebar hiển thị */
+    }
+
+    #main.expanded {
+        margin-left: 0; /* Khi sidebar ẩn, nội dung chính chiếm toàn bộ không gian */
+    }
+</style>

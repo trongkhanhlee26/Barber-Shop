@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cập nhật thông tin nhân viên</title>
+    <link rel="icon" href="/static/img/favicon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/static/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/admin/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/static/admin/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="/static/admin/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <%- include('partials/header'); %>
+        <%- include('partials/sidebar'); %>
+
+            <main id="main" class="main">
+                <div class="pagetitle">
+                    <h1>Cập nhật thông tin nhân viên</h1>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <section class="section">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">CẬP NHẬT THÔNG TIN NHÂN VIÊN</h5>
+                            <form id="updateForm" class="row g-3">
+                                <div class="col-md-12">
+                                    <label for="barberName" class="form-label">Tên nhân viên</label>
+                                    <input type="text" class="form-control" id="barberName" placeholder="Tên nhân viên"
+                                        required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="barberExperience" class="form-label">Kinh nghiệm (năm)</label>
+                                    <input type="number" class="form-control" id="barberExperience"
+                                        placeholder="Kinh nghiệm" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="barberService" class="form-label">Dịch vụ</label>
+                                    <select class="form-select" id="barberService" required>
+                                        <option value="">Chọn dịch vụ</option>
+                                        <option value="cat-toc">Cắt tóc</option>
+                                        <option value="uon-toc">Uốn tóc</option>
+                                        <option value="cat-toc-tieu-chuan">Cắt tóc tiêu chuẩn</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="barberImage" class="form-label">Chọn ảnh nhân viên</label>
+                                    <input class="form-control" type="file" id="barberImage" name="image">
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button type="button" class="btn btn-primary btn-lg me-2" id="saveButton">
+                                        <i class="bi bi-check-circle"></i> Lưu thay đổi
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-lg"
+                                        onclick="showCancelConfirmation()">
+                                        <i class="bi bi-x-circle"></i> Hủy
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="successMessage" class="success-message">
+                        <div class="message-content">
+                            <p>Cập nhật thành công!</p>
+                        </div>
+                    </div>
+
+                    <div id="cancelConfirmation" class="cancel-confirmation">
+                        <div class="confirmation-content">
+                            <p>Bạn có chắc muốn hủy không?</p>
+                            <button class="btn btn-danger" onclick="cancelAction()">Đồng ý</button>
+                            <button class="btn btn-secondary" onclick="closeCancelConfirmation()">Không</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+
+                $(document).ready(function () {
+                    const barberId = window.location.pathname.split('/').pop();
+                    $('#saveButton').on('click', function () {
+                        const formData = new FormData();
+                        formData.append('name', $('#barberName').val());
+                        formData.append('experience', $('#barberExperience').val());
+                        formData.append('service', $('#barberService').val());
+
+                        // Thay đổi này nếu bạn muốn gửi URL hình ảnh từ một trường khác
+                        const imageUrl = $('#staffsImage').val(); // Giả sử bạn đã có URL hình ảnh
+                        if (imageUrl) {
+                            formData.append('imageUrl', imageUrl);
+                        }
+
+                        $.ajax({
+                            url: `/api/staffs/update/${barberId}`,
+                            type: 'PUT',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                $('#successMessage').show();
+                                setTimeout(() => {
+                                    $('#successMessage').hide();
+                                    window.location.href = '/admin/staffs';
+                                }, 2000);
+                            },
+                            error: function (error) {
+                                console.error("Chi tiết lỗi:", error);
+                                alert(error.responseJSON && error.responseJSON.message
+                                    ? error.responseJSON.message
+                                    : 'Lỗi khi cập nhật dịch vụ! Vui lòng thử lại.');
+                            }
+                        });
+                    });
+
+                });
+
+
+                // Các hàm xử lý hiện và ẩn xác nhận hủy
+                function showCancelConfirmation() {
+                    $('#cancelConfirmation').show();
+                }
+
+                function closeCancelConfirmation() {
+                    $('#cancelConfirmation').hide();
+                }
+
+                function cancelAction() {
+                    window.location.href = '/admin/staffs';
+                }
+            </script>
+
+            <style>
+                .success-message,
+                .cancel-confirmation {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                }
+
+                .message-content,
+                .confirmation-content {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                    font-size: 1.2rem;
+                }
+
+                .confirmation-content button {
+                    margin: 10px;
+                }
+            </style>
+
+            <script src="/static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

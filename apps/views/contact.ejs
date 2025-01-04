@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>OreoOrChocopie</title>
+  <link rel="icon" href="static/img/favicon.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- animate CSS -->
+  <link rel="stylesheet" href="static/css/animate.css">
+  <!-- owl carousel CSS -->
+  <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+  <!-- themify CSS -->
+  <link rel="stylesheet" href="static/css/themify-icons.css">
+  <!-- flaticon CSS -->
+  <link rel="stylesheet" href="static/css/flaticon.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="static/css/magnific-popup.css">
+  <!-- swiper CSS -->
+  <link rel="stylesheet" href="static/css/slick.css">
+  <link rel="stylesheet" href="static/css/gijgo.min.css">
+  <link rel="stylesheet" href="static/css/nice-select.css">
+  <link rel="stylesheet" href="static/css/all.css">
+  <!-- style CSS -->
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <style>
+    /* Giảm padding của section contact */
+    .contact-section {
+      padding: 20px 0 80px 0;
+    }
+  
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+  
+    .contact-info .media {
+      margin-bottom: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+  
+    .contact-info__icon {
+      font-size: 40px;
+      margin-right: 20px;
+      color: #f85a40;
+    }
+  
+    .contact-info .media-body h3 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  
+    .contact-info .media-body p {
+      font-size: 16px;
+    }
+  
+    .section-title-center {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+  
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+  
+    .social-icons a {
+      font-size: 24px;
+      margin: 0 15px;
+      color: black;
+      transition: color 0.3s, background-color 0.3s;
+      padding: 15px;
+      border-radius: 50%;
+      border: 2px solid black;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .social-icons a:hover {
+      color: #fff;
+      background-color: black;
+    }
+  
+    .contact-container {
+      text-align: center;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <!--::header part start::-->
+  <%- include('partical/header'); %>
+  <!-- Header part end-->
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb_iner text-center">
+            <div class="breadcrumb_iner_item">
+              <h2>Thông Tin Liên Hệ</h2>
+              <p>Trang Chủ <span class="ti-angle-double-right"></span>Thông Tin Liên Hệ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb end-->
+
+  <!-- contact section start -->
+  <section class="contact-section section_padding">
+    <div class="container">
+      <div class="row contact-info">
+        <div class="col-lg-4 col-md-6">
+          <div class="media">
+            <span class="contact-info__icon"><i class="ti-home"></i></span>
+            <div class="media-body">
+              <h3>Địa Chỉ</h3>
+              <p>82 Phong Xích Lan, quận Phú Nhuận, Tp.HCM</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="media">
+            <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+            <div class="media-body">
+              <h3>028.5404.2829</h3>
+              <p>Thứ Hai - Chủ Nhật . 9am - 7pm</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="media">
+            <span class="contact-info__icon"><i class="ti-email"></i></span>
+            <div class="media-body">
+              <h3>oreoorchocopie@hutech.com</h3>
+              <p>Gửi cho chúng tôi yêu cầu của bạn bất cứ lúc nào!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media Icons -->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/kayak.barber?locale=vi_VN" target="_blank"><i class="ti-facebook"></i></a>
+        <a href="https://www.instagram.com/kayak.barber/" target="_blank"><i class="ti-instagram"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="ti-twitter-alt"></i></a>
+      </div>
+    </div>
+  </section>
+  <!-- contact section end -->
+
+  <!-- footer part start-->
+  <%- include('partical/footer'); %>
+  <!-- footer part end-->
+
+  <!-- jquery plugins here-->
+  <script src="public/js/jquery-1.12.1.min.js"></script>
+  <!-- popper js -->
+  <script src="public/js/popper.min.js"></script>
+  <!-- bootstrap js -->
+  <script src="public/js/bootstrap.min.js"></script>
+  <!-- easing js -->
+  <script src="public/js/jquery.magnific-popup.js"></script>
+  <!-- swiper js -->
+  <script src="public/js/swiper.min.js"></script>
+  <!-- swiper js -->
+  <script src="public/js/masonry.pkgd.js"></script>
+  <!-- particles js -->
+  <script src="public/js/owl.carousel.min.js"></script>
+  <!-- swiper js -->
+  <script src="public/js/slick.min.js"></script>
+  <script src="public/js/gijgo.min.js"></script>
+  <script src="public/js/jquery.nice-select.min.js"></script>
+  <!-- contact js -->
+  <script src="public/js/jquery.ajaxchimp.min.js"></script>
+  <script src="public/js/jquery.form.js"></script>
+  <script src="public/js/jquery.validate.min.js"></script>
+  <script src="public/js/mail-script.js"></script>
+  <script src="public/js/contact.js"></script>
+  <!-- custom js -->
+  <script src="public/js/custom.js"></script>
+</body>
+
+</html>
